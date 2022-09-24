@@ -7,8 +7,8 @@ export class Password {
     return passwordHash
   }
 
-  static async compare(storedPassword: string, suppliedPassword: string) {
-    const passwordsMatch = await bcrypt.compare(storedPassword, suppliedPassword)
+  static async compare(suppliedPassword: string, storedPassword: string) {
+    const passwordsMatch = await bcrypt.compare(suppliedPassword, storedPassword)
     return passwordsMatch
   }
 }
