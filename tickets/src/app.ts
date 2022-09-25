@@ -4,7 +4,8 @@ import express from "express"
 import "express-async-errors"
 
 import { currentUser, errorHandler, NotFoundError } from "@drtitik/common"
-import { createTicketRouter } from "./routes"
+import { createTicketRouter, getTicketRouter, updateTicketRouter } from "./routes"
+import { getTicketsRouter } from "./routes/get-tikets"
 
 const app = express()
 app.set("trust proxy", true)
@@ -19,6 +20,9 @@ app.use(
 app.use(currentUser)
 
 app.use(createTicketRouter)
+app.use(getTicketsRouter)
+app.use(getTicketRouter)
+app.use(updateTicketRouter)
 
 app.all("*", async (req, res, next) => {
   throw new NotFoundError()

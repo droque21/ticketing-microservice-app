@@ -1,4 +1,3 @@
-import { response } from "express"
 import request from "supertest"
 import { app } from "../../app"
 import { Ticket } from "../../models"
@@ -14,7 +13,7 @@ describe("Create Ticket", () => {
   })
 
   it("returns a status other than 401 if the user is signed in", async () => {
-    const cookie = global.signup()
+    const cookie = global.signin()
     const response = await request(app).post("/api/tickets").set("Cookie", cookie).send({})
     expect(response.status).not.toEqual(401)
   })
@@ -22,12 +21,12 @@ describe("Create Ticket", () => {
   it("returns an error if an invalid title is provided", async () => {
     await request(app)
       .post("/api/tickets")
-      .set("Cookie", global.signup())
+      .set("Cookie", global.signin())
       .send({ title: "", price: 10 })
       .expect(400)
     await request(app)
       .post("/api/tickets")
-      .set("Cookie", global.signup())
+      .set("Cookie", global.signin())
       .send({ price: 10 })
       .expect(400)
   })
@@ -35,12 +34,12 @@ describe("Create Ticket", () => {
   it("returns an error if an invalid price is provided", async () => {
     await request(app)
       .post("/api/tickets")
-      .set("Cookie", global.signup())
+      .set("Cookie", global.signin())
       .send({ title: "asdf", price: -10 })
       .expect(400)
     await request(app)
       .post("/api/tickets")
-      .set("Cookie", global.signup())
+      .set("Cookie", global.signin())
       .send({ title: "asdf" })
       .expect(400)
   })
@@ -51,7 +50,7 @@ describe("Create Ticket", () => {
 
     const response = await request(app)
       .post("/api/tickets")
-      .set("Cookie", global.signup())
+      .set("Cookie", global.signin())
       .send({ title: "asdf", price: 20 })
 
     expect(response.status).toEqual(201)

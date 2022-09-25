@@ -5,7 +5,7 @@ import request from "supertest"
 import { app } from "../app"
 
 declare global {
-  var signup: () => string[]
+  var signin: () => string[]
 }
 
 let mongo: MongoMemoryServer
@@ -33,10 +33,11 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-global.signup = () => {
+global.signin = () => {
+  const id = new mongoose.Types.ObjectId().toHexString()
   const token = jwt.sign(
     {
-      id: "123",
+      id,
       email: "test@test.com",
     },
     process.env.JWT_KEY!
