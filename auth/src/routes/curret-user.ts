@@ -1,7 +1,5 @@
+import { currentUser, requireAuth } from "@drtitik/common"
 import express from "express"
-import jwt from "jsonwebtoken"
-import { currentUser } from "../middlewares"
-import { requireAuth } from "../middlewares/require-auth"
 
 const router = express.Router()
 

@@ -4,9 +4,7 @@ import { json } from "body-parser"
 import cookieSession from "cookie-session"
 
 import { currentUserRouter, signInRouter, signOutRouter, signUpRouter } from "./routes"
-
-import { errorHandler } from "./middlewares"
-import { NotFoundError } from "./errors"
+import { errorHandler, NotFoundError } from "@drtitik/common"
 
 const app = express()
 app.set("trust proxy", true)
