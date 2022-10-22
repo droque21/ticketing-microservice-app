@@ -1,7 +1,9 @@
 import { requireAuth, validateRequest } from "@drtitik/common"
 import express, { Request, Response } from "express"
-import { body, ValidationError } from "express-validator"
+import { body } from "express-validator"
+import { TicketCreatedPublisher } from "../events"
 import { Ticket } from "../models"
+import { natsWrapper } from "../nats-wrapper"
 
 const router = express.Router()
 
@@ -24,8 +26,16 @@ router.post(
 
     ticket.save()
 
+    new TicketCreatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    })
+
     res.status(201).send(ticket)
   }
 )
 
 export { router as createTicketRouter }
+

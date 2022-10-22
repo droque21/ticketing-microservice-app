@@ -4,11 +4,15 @@ import jwt from "jsonwebtoken"
 import request from "supertest"
 import { app } from "../app"
 
+jest.mock("../nats-wrapper");
+
 declare global {
   var signin: () => string[]
 }
 
+
 let mongo: MongoMemoryServer
+
 
 beforeAll(async () => {
   process.env.JWT_KEY = "asdf"
