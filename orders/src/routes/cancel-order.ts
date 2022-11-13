@@ -1,6 +1,8 @@
 import { NotAuthorizedError, NotFoundError, OrderStatus, requireAuth } from '@drtitik/common';
 import express, { Request, Response } from 'express';
+import { OrderCancelledPublisher } from '../events';
 import { Order } from '../models/order';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -20,6 +22,14 @@ router.patch('/api/orders/:orderId',requireAuth, async (req: Request, res: Respo
   order.status = OrderStatus.Cancelled;
 
   await order.save();
+
+  new OrderCancelledPublisher(natsWrapper.client).publish({
+    id: order.id,
+    ticket: {
+      id: order.ticket.id,
+    }
+  })
+
 
   res.send(order);
 });
