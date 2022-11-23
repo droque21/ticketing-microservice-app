@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from "../../models/ticket";
@@ -6,18 +7,21 @@ describe('GET /api/orders', () => {
 
   it('fetches orders for an particular user', async () => {
     const ticketOne = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: 'concert',
       price: 20,
     });
     await ticketOne.save();
 
     const ticketTwo = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: 'concert',
       price: 20,
     });
     await ticketTwo.save();
 
     const ticketThree = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: 'concert',
       price: 20,
     });

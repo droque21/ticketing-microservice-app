@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
@@ -7,6 +8,7 @@ describe('GET /api/orders', () => {
     const cookie = global.signin();
 
     const ticket = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: 'concert',
       price: 20,
     });
@@ -31,6 +33,7 @@ describe('GET /api/orders', () => {
     const cookie = global.signin();
 
     const ticket = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: 'concert',
       price: 20,
     });

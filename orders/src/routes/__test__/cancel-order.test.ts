@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { Order, OrderStatus } from '../../models/order';
@@ -10,6 +11,7 @@ describe('DELETE /api/orders/:orderId', () => {
     const cookie = global.signin();
 
     const ticket = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: 'concert',
       price: 20,
     });
@@ -36,6 +38,7 @@ describe('DELETE /api/orders/:orderId', () => {
     const cookie = global.signin();
 
     const ticket = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: 'concert',
       price: 20,
     });
